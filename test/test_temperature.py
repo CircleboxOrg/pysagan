@@ -10,7 +10,6 @@ def test_temperature_parse():
     eq_(temperature._parse_temp_bytes(0b00011001, 0b00000000),   25.000)
     eq_(temperature._parse_temp_bytes(0b00000000, 0b00100000),    0.125)
     eq_(temperature._parse_temp_bytes(0b00000000, 0b00000000),    0.000)
-    eq_(temperature._parse_temp_bytes(0b00000000, 0b00000000),    0.000)
     eq_(temperature._parse_temp_bytes(0b11111111, 0b11100000),   -0.125)
     eq_(temperature._parse_temp_bytes(0b11100111, 0b00000000),  -25.000)
     eq_(temperature._parse_temp_bytes(0b11001001, 0b00100000),  -54.875)
