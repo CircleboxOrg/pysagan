@@ -10,5 +10,5 @@ class Barometer(I2cDevice):
         pass
 
     def test(self):
-        id = self.read(0xD0, 1)
+        id = self.read(0xD0, 1)[0]
         return id == 0x60
