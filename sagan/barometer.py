@@ -47,3 +47,13 @@ class Barometer(I2cDevice):
     def test(self):
         id, = self.read_and_unpack(BME280_REGISTER_CHIPID, 'B')
         return id == 0x60
+
+    def configure(self):
+        mode = 0b11 # 'Normal' mode
+        pressure_oversample = 1
+        temperature_oversample = 1
+        humidity_oversample = 1
+        ctrl_meas = (temperature_oversample << 5) | (pressure_oversample << 2) | mode
+        ctrl_hum = humidity_oversample & 0b00000111
+        self.pack_and_write(0xF4, 'B', ctrl_meas)
+        self.pack_and_write(0xF2, 'B', ctrl_hum)

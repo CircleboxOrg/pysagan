@@ -20,3 +20,8 @@ class I2cDevice:
         s = struct.Struct(fmt)
         b = bytes(self.read(cmd, s.size))
         return s.unpack(b)
+
+    def pack_and_write(self, cmd, fmt, values):
+        s = struct.Struct(fmt)
+        b = s.pack(values)
+        return self.write(cmd, [c for c in b])
