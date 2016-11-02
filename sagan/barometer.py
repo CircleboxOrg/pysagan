@@ -39,8 +39,8 @@ BME280_REGISTER_HUMIDITY_DATA = 0xFD
 class Barometer(I2cDevice):
     data_frame = '<HBHBH'
     parameters_frame_1 = '<HhhHhhhhhhhhB'
-    parameters_frame_2 = 'hBhhb'
-    mode = 0b10  # 'Forced' mode
+    parameters_frame_2 = '<hBhhb'
+    mode = 0b1  # 'Forced' mode
     pressure_oversample = 1
     temperature_oversample = 1
     humidity_oversample = 1
@@ -54,7 +54,7 @@ class Barometer(I2cDevice):
     """
     def read_raw_measurements(self):
         # Forced measurement mode
-        if self.mode in (0x01, 0x10):
+        if self.mode in (0b01, 0b10):
             self.configure()
         # TODO: calculate appropriate sleep time, this is in the data sheet
         time.sleep(0.500)
