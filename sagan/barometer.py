@@ -38,23 +38,38 @@ BME280_REGISTER_HUMIDITY_DATA = 0xFD
 
 class Barometer(I2cDevice):
     data_frame = '<HBHBH'
-    parameters_frame = '<HhhHhhhhhhhhBhB'
+    parameters_frame_1 = '<HhhHhhhhhhhhB'
+    parameters_frame_2 = 'hBhhb'
     mode = 0b10  # 'Forced' mode
     pressure_oversample = 1
     temperature_oversample = 1
     humidity_oversample = 1
 
+    temperature_parameters = [0] * 3
+    pressure_parameters = [0] * 9
+    humidity_parameters = [0] * 6
+
     """
     Interface for BME280 pressure and humidity
     """
-    def measure(self):
+    def read_raw_measurements(self):
         # Forced measurement mode
         if self.mode in (0x01, 0x10):
             self.configure()
         # TODO: calculate appropriate sleep time, this is in the data sheet
         time.sleep(0.500)
-        frame = self.read_and_unpack(0xF7, self.data_frame)
-        return frame
+        return self.read_and_unpack(0xF7, self.data_frame)
+
+    def measure(self):
+        t_raw, tx_raw, p_raw, px_raw, h_raw = self.read_raw_measurements()
+        T1 = self.temperature_parameters[0]
+        T2 = self.temperature_parameters[1]
+        T3 = self.temperature_parameters[2]
+        var1 = (t_raw / 16384.0 - T1 / 1024.0) * float(T2)
+        var2 = ((t_raw / 131072.0 - T1 / 8192.0) * (t_raw / 131072.0 - T1 / 8192.0)) * float(T3)
+        # self.t_fine = int(var1 + var2)
+        temp = (var1 + var2) / 5120.0
+        return temp + 273.15
 
     def test(self):
         id, = self.read_and_unpack(BME280_REGISTER_CHIPID, 'B')
@@ -67,4 +82,6 @@ class Barometer(I2cDevice):
         self.pack_and_write(0xF4, 'B', ctrl_meas)
 
     def read_parameters(self):
-        return self.read_and_unpack(0x88, self.parameters_frame)
+        frame_1 = self.read_and_unpack(0x88, self.parameters_frame_1)
+        self.temperature_parameters = frame_1[0:3]
+        self.pressure_parameters = frame_1[3:12]
