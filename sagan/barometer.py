@@ -2,39 +2,6 @@ import time
 
 from .i2c import I2cDevice
 
-BME280_REGISTER_T1 = 0x88  # Trimming parameter registers
-BME280_REGISTER_T2 = 0x8A
-BME280_REGISTER_T3 = 0x8C
-
-BME280_REGISTER_P1 = 0x8E
-BME280_REGISTER_P2 = 0x90
-BME280_REGISTER_P3 = 0x92
-BME280_REGISTER_P4 = 0x94
-BME280_REGISTER_P5 = 0x96
-BME280_REGISTER_P6 = 0x98
-BME280_REGISTER_P7 = 0x9A
-BME280_REGISTER_P8 = 0x9C
-BME280_REGISTER_P9 = 0x9E
-
-BME280_REGISTER_H1 = 0xA1
-BME280_REGISTER_H2 = 0xE1
-BME280_REGISTER_H3 = 0xE3
-BME280_REGISTER_H4 = 0xE4
-BME280_REGISTER_H5 = 0xE5
-BME280_REGISTER_H6 = 0xE6
-BME280_REGISTER_H7 = 0xE7
-
-BME280_REGISTER_CHIPID = 0xD0
-BME280_REGISTER_VERSION = 0xD1
-BME280_REGISTER_SOFTRESET = 0xE0
-
-BME280_REGISTER_CONTROL_HUM = 0xF2
-BME280_REGISTER_CONTROL = 0xF4
-BME280_REGISTER_CONFIG = 0xF5
-BME280_REGISTER_PRESSURE_DATA = 0xF7
-BME280_REGISTER_TEMP_DATA = 0xFA
-BME280_REGISTER_HUMIDITY_DATA = 0xFD
-
 
 class Barometer(I2cDevice):
     data_frame = '<HBHBH'
@@ -64,8 +31,7 @@ class Barometer(I2cDevice):
 
         return p, t, h
 
-    def measure(self):
-        p_raw,  t_raw, h_raw = self.read_raw_measurements()
+    def apply_calibration(self, p_raw, t_raw, h_raw):
         T1 = self.temperature_parameters[0]
         T2 = self.temperature_parameters[1]
         T3 = self.temperature_parameters[2]
@@ -88,7 +54,7 @@ class Barometer(I2cDevice):
         var1 = (t_raw / 16384.0 - T1 / 1024.0) * T2
         var2 = ((t_raw / 131072.0 - T1 / 8192.0) * (t_raw / 131072.0 - T1 / 8192.0)) * T3
         t_fine = int(var1 + var2)
-        t = (var1 + var2) / 5120.0 + 273.15
+        t = (var1 + var2) / 5120.0
 
         var1 = t_fine / 2.0 - 64000.0
         var2 = var1 * var1 * P6 / 32768.0
@@ -105,9 +71,8 @@ class Barometer(I2cDevice):
             var1 = P9 * p * p / 2147483648.0
             var2 = p * P8 / 32768.0
             p = p + (var1 + var2 + P7) / 16.0
-        p = p / 1000
+        p = p
 
-        # print 'Raw humidity = {0:d}'.format (adc)
         h = t_fine - 76800.0
         h = (h_raw - (H4 * 64.0 + H5 / 16384.8 * h)) * (
             H2 / 65536.0 * (1.0 + H6 / 67108864.0 * h * (
@@ -117,8 +82,11 @@ class Barometer(I2cDevice):
             h = 100
         elif h < 0:
             h = 0
-
         return t, p, h
+
+    def measure(self):
+        p_raw,  t_raw, h_raw = self.read_raw_measurements()
+        return self.apply_calibration(p_raw, t_raw, h_raw)
 
     def test(self):
         id, = self.read_and_unpack(BME280_REGISTER_CHIPID, 'B')
