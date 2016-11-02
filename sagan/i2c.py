@@ -1,4 +1,5 @@
 import smbus
+import struct
 
 
 class I2cDevice:
@@ -14,3 +15,8 @@ class I2cDevice:
 
     def write(self, cmd, values):
         return self.bus.write_i2c_block_data(self.address, cmd, values)
+
+    def read_and_unpack(self, cmd, fmt):
+        s = struct.Struct(fmt)
+        b = self.read(cmd, s.size)
+        return s.unpack(b)
