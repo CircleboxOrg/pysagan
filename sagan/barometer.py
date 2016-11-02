@@ -45,5 +45,5 @@ class Barometer(I2cDevice):
         return frame
 
     def test(self):
-        id = self.read_and_unpack(BME280_REGISTER_CHIPID, 'B')
+        id, = self.read_and_unpack(BME280_REGISTER_CHIPID, 'B')
         return id == 0x60
