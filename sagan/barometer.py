@@ -1,3 +1,5 @@
+import time
+
 from .i2c import I2cDevice
 
 BME280_REGISTER_T1 = 0x88  # Trimming parameter registers
@@ -36,11 +38,20 @@ BME280_REGISTER_HUMIDITY_DATA = 0xFD
 
 class Barometer(I2cDevice):
     data_frame = '<HBHBH'
+    mode = 0b10  # 'Forced' mode
+    pressure_oversample = 1
+    temperature_oversample = 1
+    humidity_oversample = 1
 
     """
     Interface for BME280 pressure and humidity
     """
     def measure(self):
+        # Forced measurement mode
+        if self.mode in (0x01, 0x10):
+            self.configure()
+        # TODO: calculate appropriate sleep time, this is in the data sheet
+        time.sleep(0.500)
         frame = self.read_and_unpack(0xF7, self.data_frame)
         return frame
 
@@ -49,11 +60,7 @@ class Barometer(I2cDevice):
         return id == 0x60
 
     def configure(self):
-        mode = 0b11 # 'Normal' mode
-        pressure_oversample = 1
-        temperature_oversample = 1
-        humidity_oversample = 1
-        ctrl_meas = (temperature_oversample << 5) | (pressure_oversample << 2) | mode
-        ctrl_hum = humidity_oversample & 0b00000111
-        self.pack_and_write(0xF4, 'B', ctrl_meas)
+        ctrl_meas = (self.temperature_oversample << 5) | (self.pressure_oversample << 2) | self.mode
+        ctrl_hum = self.humidity_oversample & 0b00000111
         self.pack_and_write(0xF2, 'B', ctrl_hum)
+        self.pack_and_write(0xF4, 'B', ctrl_meas)
