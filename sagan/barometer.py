@@ -61,7 +61,7 @@ class Barometer(I2cDevice):
         return self.read_and_unpack(0xF7, self.data_frame)
 
     def measure(self):
-        t_raw, tx_raw, p_raw, px_raw, h_raw = self.read_raw_measurements()
+        p_raw, px_raw, t_raw, tx_raw, h_raw = self.read_raw_measurements()
         T1 = self.temperature_parameters[0]
         T2 = self.temperature_parameters[1]
         T3 = self.temperature_parameters[2]
