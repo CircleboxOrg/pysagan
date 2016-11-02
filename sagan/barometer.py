@@ -35,7 +35,7 @@ BME280_REGISTER_HUMIDITY_DATA = 0xFD
 
 
 class Barometer(I2cDevice):
-    data_frame = '<HB<HB<H'
+    data_frame = '<HBHBH'
 
     """
     Interface for BME280 pressure and humidity

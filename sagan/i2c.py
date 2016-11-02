@@ -18,5 +18,5 @@ class I2cDevice:
 
     def read_and_unpack(self, cmd, fmt):
         s = struct.Struct(fmt)
-        b = self.read(cmd, s.size)
+        b = bytes(self.read(cmd, s.size))
         return s.unpack(b)
