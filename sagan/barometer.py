@@ -38,6 +38,7 @@ BME280_REGISTER_HUMIDITY_DATA = 0xFD
 
 class Barometer(I2cDevice):
     data_frame = '<HBHBH'
+    parameters_frame = '<HhhHhhhhhhhhBhB'
     mode = 0b10  # 'Forced' mode
     pressure_oversample = 1
     temperature_oversample = 1
@@ -64,3 +65,6 @@ class Barometer(I2cDevice):
         ctrl_hum = self.humidity_oversample & 0b00000111
         self.pack_and_write(0xF2, 'B', ctrl_hum)
         self.pack_and_write(0xF4, 'B', ctrl_meas)
+
+    def read_parameters(self):
+        return self.read_and_unpack(0x88, self.parameters_frame)
