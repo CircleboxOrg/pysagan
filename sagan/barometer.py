@@ -58,15 +58,19 @@ class Barometer(I2cDevice):
             self.configure()
         # TODO: calculate appropriate sleep time, this is in the data sheet
         time.sleep(0.500)
-        return self.read_and_unpack(0xF7, self.data_frame)
+        p1, p0, t1, t0, h = self.read_and_unpack(0xF7, self.data_frame)
+        p = (p0 >> 4) | (p1 << 4)
+        t = (t0 >> 4) | (t1 << 4)
+
+        return p, t, h
 
     def measure(self):
-        p_raw, px_raw, t_raw, tx_raw, h_raw = self.read_raw_measurements()
+        p_raw,  t_raw, h_raw = self.read_raw_measurements()
         T1 = self.temperature_parameters[0]
         T2 = self.temperature_parameters[1]
         T3 = self.temperature_parameters[2]
-        var1 = (t_raw / 16384.0 - T1 / 1024.0) * float(T2)
-        var2 = ((t_raw / 131072.0 - T1 / 8192.0) * (t_raw / 131072.0 - T1 / 8192.0)) * float(T3)
+        var1 = (t_raw / 16384.0 - T1 / 1024.0) * T2
+        var2 = ((t_raw / 131072.0 - T1 / 8192.0) * (t_raw / 131072.0 - T1 / 8192.0)) * T3
         # self.t_fine = int(var1 + var2)
         temp = (var1 + var2) / 5120.0
         return temp + 273.15
