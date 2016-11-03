@@ -115,39 +115,43 @@ def assert_almost_equal(x, y, rel_tolerance=1e-4):
 
 def test_calibration_curves():
     baro = Barometer(None, 0x00)
-    baro.temperature_parameters[0] = 1
-    baro.temperature_parameters[1] = -2
-    baro.temperature_parameters[2] = -3
-    baro.pressure_parameters[0] = 4
-    baro.pressure_parameters[1] = -5
-    baro.pressure_parameters[2] = -6
-    baro.pressure_parameters[3] = -7
-    baro.pressure_parameters[4] = -8
-    baro.pressure_parameters[5] = -9
-    baro.pressure_parameters[6] = -10
-    baro.pressure_parameters[7] = -11
-    baro.pressure_parameters[8] = -12
-    baro.humidity_parameters[0] = 12
-    baro.humidity_parameters[1] = -12
-    baro.humidity_parameters[2] = 12
-    baro.humidity_parameters[3] = -12
-    baro.humidity_parameters[4] = -12
-    baro.humidity_parameters[5] = -13
+    baro.temperature_parameters[0] = 28353
+    baro.temperature_parameters[1] = 26575
+    baro.temperature_parameters[2] = 50
 
-    t_values = (
-        3.81461e-07, -0.00272476, -0.00613201, -0.0102214, -0.0149929, -0.0204465, -0.0265823, -0.0334001, -0.0409001,
-        -0.0490822,)
-    p_values = (
-        7.00843e+08, 7.14901e+08, 7.11906e+08, 6.91859e+08, 6.5476e+08, 6.00608e+08, 5.29403e+08, 4.41146e+08,
-        3.35837e+08,
-        2.13475e+08,)
-    h_values = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0,)
+    baro.pressure_parameters[0] = 37446
+    baro.pressure_parameters[1] = -10740
+    baro.pressure_parameters[2] = 3024
+    baro.pressure_parameters[3] = 8986
+    baro.pressure_parameters[4] = -124
+    baro.pressure_parameters[5] = -7
+    baro.pressure_parameters[6] = 9900
+    baro.pressure_parameters[7] = -10230
+    baro.pressure_parameters[8] = 4285
+
+    baro.humidity_parameters[0] = 0
+    baro.humidity_parameters[1] = 354
+    baro.humidity_parameters[2] = 0
+    baro.humidity_parameters[3] = 340
+    baro.humidity_parameters[4] = 0
+    baro.humidity_parameters[5] = 30
+
+    # The following lines are output by the C program at the start of this module
+    t_a = 100000
+    t_b = -100000
+    t_values = (-175.221, -143.598, -111.964, -80.3188, -48.6621, -16.994, 14.6855, 46.3763, 78.0785, 109.792,)
+    p_a = 100000
+    p_b = -100000
+    p_values = (168562, 151534, 134575, 117685, 100865, 84114.7, 67433.7, 50822.1, 34280, 17807.5,)
+    h_a = 2100
+    h_b = 21000
+    h_values = (0, 7.40383, 19.0068, 30.6099, 42.2129, 53.8159, 65.4189, 77.0219, 88.6249, 100,)
 
     for i in range(10):
-        t_raw = i * 100000
-        p_raw = i * 100000
-        h_raw = i * 100000
-        t, p, h = baro.apply_calibration(t_raw, p_raw, h_raw)
+        t_raw = i * t_a + t_b
+        p_raw = i * p_a + p_b
+        h_raw = i * h_a + h_b
+        t, p, h = baro.apply_calibration(t_raw, p_raw, h_raw, 25.0 * 5120)
 
         assert_almost_equal(t, t_values[i])
         assert_almost_equal(p, p_values[i])

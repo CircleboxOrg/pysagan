@@ -31,7 +31,7 @@ class Barometer(I2cDevice):
 
         return p, t, h
 
-    def apply_calibration(self, p_raw, t_raw, h_raw):
+    def apply_calibration(self, p_raw, t_raw, h_raw, t_calib=None):
         T1 = self.temperature_parameters[0]
         T2 = self.temperature_parameters[1]
         T3 = self.temperature_parameters[2]
@@ -56,13 +56,15 @@ class Barometer(I2cDevice):
         t_fine = int(var1 + var2)
         t = (var1 + var2) / 5120.0
 
+        if t_calib is not None:
+            t_fine = t_calib
+
         var1 = t_fine / 2.0 - 64000.0
         var2 = var1 * var1 * P6 / 32768.0
         var2 = var2 + var1 * P5 * 2.0
         var2 = var2 / 4.0 + P4 * 65536.0
         var1 = (P3 * var1 * var1 / 524288.0 + P2 * var1) / 524288.0
         var1 = (1.0 + var1 / 32768.0) * P1
-
         if var1 == 0:
             p = 0
         else:
