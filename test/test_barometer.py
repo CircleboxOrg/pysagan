@@ -7,26 +7,26 @@ This test uses cases generated with the following C language code:
     typedef int32_t BME280_S32_t;
     typedef uint32_t BME280_U32_t;
 
-    BME280_U32_t dig_T1 = 1;
-    BME280_S32_t dig_T2 = -2;
-    BME280_S32_t dig_T3 = -3;
+    BME280_U32_t dig_T1 = 28353;
+    BME280_S32_t dig_T2 = 26575;
+    BME280_S32_t dig_T3 = 50;
 
-    BME280_U32_t dig_P1 = 4;
-    BME280_S32_t dig_P2 = -5;
-    BME280_S32_t dig_P3 = -6;
-    BME280_S32_t dig_P4 = -7;
-    BME280_S32_t dig_P5 = -8;
-    BME280_S32_t dig_P6 = -9;
-    BME280_S32_t dig_P7 = -10;
-    BME280_S32_t dig_P8 = -11;
-    BME280_S32_t dig_P9 = -12;
+    BME280_U32_t dig_P1 = 37446;
+    BME280_S32_t dig_P2 = -10740;
+    BME280_S32_t dig_P3 = 3024;
+    BME280_S32_t dig_P4 = 8986;
+    BME280_S32_t dig_P5 = -124;
+    BME280_S32_t dig_P6 = -7;
+    BME280_S32_t dig_P7 = 9900;
+    BME280_S32_t dig_P8 = -10230;
+    BME280_S32_t dig_P9 = 4285;
 
-    BME280_U32_t dig_H1 = 13;
-    BME280_S32_t dig_H2 = -14;
-    BME280_U32_t dig_H3 = 15;
-    BME280_S32_t dig_H4 = -16;
-    BME280_S32_t dig_H5 = -17;
-    BME280_S32_t dig_H6 = -18;
+    BME280_U32_t dig_H1 = 0;
+    BME280_S32_t dig_H2 = 354;
+    BME280_U32_t dig_H3 = 0;
+    BME280_S32_t dig_H4 = 340;
+    BME280_S32_t dig_H5 = 0;
+    BME280_S32_t dig_H6 = 30;
 
     // Returns temperature in DegC, double precision. Output value of “51.23” equals
     // 51.23 DegC. // t_fine carries fine temperature as global value
