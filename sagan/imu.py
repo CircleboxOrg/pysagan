@@ -89,10 +89,10 @@ TIME_LATENCY = 0x3C
 TIME_WINDOW = 0x3D
 
 
-class Imu(I2cDevice):
+class AccelerometerMagnetometer(I2cDevice):
     def self_test(self) -> bool:
         id, = self.read_and_unpack(0x0F, 'B')
-        return id == 0x01001001
+        return id == 0b01001001
 
     def configure(self, args: dict) -> None:
         self.pack_and_write(CTRL_REG1_XM, 'B', 0b01100111)  # z,y,x axis enabled, continuos update,  100Hz data rate
@@ -105,11 +105,23 @@ class Imu(I2cDevice):
         self.pack_and_write(CTRL_REG7_XM, 'B', 0b00000000)  # Continuous-conversion mode
         self.Magno_LSB = 0.00048
 
+    def measure(self):
+        acc = self.read_and_unpack(0x28, '<hhh')
+        mag = self.read_and_unpack(0x08, '<hhh')
+        return acc, mag
+
+
+class Gyroscope(I2cDevice):
+    def self_test(self) -> bool:
+        id, = self.read_and_unpack(0x0F, 'B')
+        return id == 0b11010100
+
+    def configure(self, args: dict):
         # initialise the gyroscope
         self.pack_and_write("Gyroscope", CTRL_REG1_G, 0b00001111)  # Normal power mode, all axes enabled
         self.pack_and_write("Gyroscope", CTRL_REG4_G, 0b00110000)  # Continuos update, 2000 dps full scale
         self.Gyro_LSB = 0.070
 
     def measure(self):
-        acc = self.read_and_unpack(0x28, '<hhh')
-        mag = self.read_and_unpack(0x08, '<hhh')
+        gyro = self.read_and_unpack(0x28, '<hhh')
+        return gyro
