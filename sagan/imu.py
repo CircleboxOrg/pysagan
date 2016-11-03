@@ -89,7 +89,17 @@ TIME_LATENCY = 0x3C
 TIME_WINDOW = 0x3D
 
 
-class AccelerometerMagnetometer(I2cDevice):
+class Lsm9ds0I2cDevice(I2cDevice):
+    """
+    This overrides the read method to toggle the high bit in the register address.
+    This is needed for multi-byte reads.
+    """
+    def read(self, cmd, length):
+        cmd |= 0x80
+        super(Lsm9ds0I2cDevice, self).read(cmd, length)
+
+
+class AccelerometerMagnetometer(Lsm9ds0I2cDevice):
     def self_test(self) -> bool:
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b01001001
@@ -111,7 +121,7 @@ class AccelerometerMagnetometer(I2cDevice):
         return acc, mag
 
 
-class Gyroscope(I2cDevice):
+class Gyroscope(Lsm9ds0I2cDevice):
     def self_test(self) -> bool:
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b11010100
