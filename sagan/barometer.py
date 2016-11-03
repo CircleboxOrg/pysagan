@@ -29,9 +29,9 @@ class Barometer(I2cDevice):
         p = (p0 >> 4) | (p1 << 4)
         t = (t0 >> 4) | (t1 << 4)
 
-        return p, t, h
+        return t, p, h
 
-    def apply_calibration(self, p_raw, t_raw, h_raw, t_calib=None):
+    def apply_calibration(self, t_raw, p_raw, h_raw, t_calib=None):
         T1 = self.temperature_parameters[0]
         T2 = self.temperature_parameters[1]
         T3 = self.temperature_parameters[2]
@@ -87,8 +87,7 @@ class Barometer(I2cDevice):
         return t, p, h
 
     def measure(self):
-        p_raw,  t_raw, h_raw = self.read_raw_measurements()
-        return self.apply_calibration(p_raw, t_raw, h_raw)
+        return self.apply_calibration(*self.read_raw_measurements())
 
     def test(self):
         id, = self.read_and_unpack(0xD0, 'B')
