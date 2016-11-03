@@ -95,14 +95,14 @@ class AccelerometerMagnetometer(I2cDevice):
         return id == 0b01001001
 
     def configure(self, args: dict) -> None:
-        self.pack_and_write(CTRL_REG1_XM, 'B', 0b01100111)  # z,y,x axis enabled, continuos update,  100Hz data rate
-        self.pack_and_write(CTRL_REG2_XM, 'B', 0b00100000)  # +/- 16G full scale
+        self.write(CTRL_REG1_XM, [0b01100111])  # z,y,x axis enabled, continuos update,  100Hz data rate
+        self.write(CTRL_REG2_XM, [0b00100000])  # +/- 16G full scale
         self.Accel_LSB = 0.000732 * 9.80665
 
         # initialise the magnetometer
-        self.pack_and_write(CTRL_REG5_XM, 'B', 0b11110000)  # Temp enable, M data rate = 50Hz
-        self.pack_and_write(CTRL_REG6_XM, 'B', 0b01100000)  # +/-12gauss
-        self.pack_and_write(CTRL_REG7_XM, 'B', 0b00000000)  # Continuous-conversion mode
+        self.write(CTRL_REG5_XM, [0b11110000])  # Temp enable, M data rate = 50Hz
+        self.write(CTRL_REG6_XM, [0b01100000])  # +/-12gauss
+        self.write(CTRL_REG7_XM, [0b00000000])  # Continuous-conversion mode
         self.Magno_LSB = 0.00048
 
     def measure(self):
@@ -118,8 +118,8 @@ class Gyroscope(I2cDevice):
 
     def configure(self, args: dict):
         # initialise the gyroscope
-        self.pack_and_write(CTRL_REG1_G, 'B', 0b00001111)  # Normal power mode, all axes enabled
-        self.pack_and_write(CTRL_REG4_G, 'B', 0b00110000)  # Continuos update, 2000 dps full scale
+        self.write(CTRL_REG1_G, [0b00001111])  # Normal power mode, all axes enabled
+        self.write(CTRL_REG4_G, [0b00110000])  # Continuos update, 2000 dps full scale
 
     def measure(self):
         gyro = self.read_and_unpack(0x28, '<hhh')
