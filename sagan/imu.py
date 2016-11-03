@@ -91,7 +91,8 @@ TIME_WINDOW = 0x3D
 
 class Imu(I2cDevice):
     def self_test(self) -> bool:
-        return self.read_and_unpack(0x0F, 'B')[0] == 0x01001001
+        id, = self.read_and_unpack(0x0F, 'B')
+        return id == 0x01001001
 
     def configure(self, args: dict) -> None:
         self.pack_and_write(CTRL_REG1_XM, 'B', 0b01100111)  # z,y,x axis enabled, continuos update,  100Hz data rate
