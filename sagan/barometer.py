@@ -22,7 +22,7 @@ class Barometer(I2cDevice):
     def read_raw_measurements(self):
         # Forced measurement mode
         if self.mode in (0b01, 0b10):
-            self.configure()
+            self.configure({})
         # TODO: calculate appropriate sleep time, this is in the data sheet
         time.sleep(0.500)
         p1, p0, t1, t0, h = self.read_and_unpack(0xF7, self.data_frame)
