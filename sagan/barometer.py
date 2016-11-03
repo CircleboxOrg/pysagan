@@ -93,7 +93,7 @@ class Barometer(I2cDevice):
         id, = self.read_and_unpack(0xD0, 'B')
         return id == 0x60
 
-    def configure(self):
+    def configure(self, args):
         ctrl_meas = (self.temperature_oversample << 5) | (self.pressure_oversample << 2) | self.mode
         ctrl_hum = self.humidity_oversample & 0b00000111
         self.pack_and_write(0xF2, 'B', ctrl_hum)
