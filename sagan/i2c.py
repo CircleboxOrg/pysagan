@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 import smbus
 import struct
 
@@ -25,3 +27,11 @@ class I2cDevice:
         s = struct.Struct(fmt)
         b = s.pack(values)
         return self.write(cmd, [c for c in b])
+
+    @abstractmethod
+    def configure(self, args: dict) -> None:
+        pass
+
+    @abstractmethod
+    def self_test(self) -> bool:
+        pass
