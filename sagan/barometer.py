@@ -89,7 +89,7 @@ class Barometer(I2cDevice):
     def measure(self):
         return self.apply_calibration(*self.read_raw_measurements())
 
-    def test(self):
+    def self_test(self):
         id, = self.read_and_unpack(0xD0, 'B')
         return id == 0x60
 

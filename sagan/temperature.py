@@ -17,6 +17,6 @@ class TemperatureSensor(I2cDevice):
         temp = self.read(0, 2)
         return _parse_temp_bytes(temp[0], temp[1])
 
-    def test(self):
+    def self_test(self):
         config = self.read(0x00, 1)[0]
         return config == 0x00
