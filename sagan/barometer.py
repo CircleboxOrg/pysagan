@@ -91,7 +91,7 @@ class Barometer(I2cDevice):
         return self.apply_calibration(p_raw, t_raw, h_raw)
 
     def test(self):
-        id, = self.read_and_unpack(BME280_REGISTER_CHIPID, 'B')
+        id, = self.read_and_unpack(0xD0, 'B')
         return id == 0x60
 
     def configure(self):
