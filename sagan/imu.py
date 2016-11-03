@@ -118,9 +118,8 @@ class Gyroscope(I2cDevice):
 
     def configure(self, args: dict):
         # initialise the gyroscope
-        self.pack_and_write("Gyroscope", CTRL_REG1_G, 0b00001111)  # Normal power mode, all axes enabled
-        self.pack_and_write("Gyroscope", CTRL_REG4_G, 0b00110000)  # Continuos update, 2000 dps full scale
-        self.Gyro_LSB = 0.070
+        self.pack_and_write(CTRL_REG1_G, 'B', 0b00001111)  # Normal power mode, all axes enabled
+        self.pack_and_write(CTRL_REG4_G, 'B', 0b00110000)  # Continuos update, 2000 dps full scale
 
     def measure(self):
         gyro = self.read_and_unpack(0x28, '<hhh')
