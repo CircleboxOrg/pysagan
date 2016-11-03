@@ -100,37 +100,44 @@ class Lsm9ds0I2cDevice(I2cDevice):
 
 
 class AccelerometerMagnetometer(Lsm9ds0I2cDevice):
+    acceleration_scale = 0.000732 * 9.80665
+    magnetometer_scale = 0.00048
+
     def self_test(self) -> bool:
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b01001001
 
     def configure(self, args: dict) -> None:
-        self.write(CTRL_REG1_XM, [0b01100111])  # z,y,x axis enabled, continuos update,  100Hz data rate
-        self.write(CTRL_REG2_XM, [0b00100000])  # +/- 16G full scale
-        self.Accel_LSB = 0.000732 * 9.80665
+        self.write(CTRL_REG1_XM, [0b01100111])
+        self.write(CTRL_REG2_XM, [0b00100000])
 
         # initialise the magnetometer
-        self.write(CTRL_REG5_XM, [0b11110000])  # Temp enable, M data rate = 50Hz
-        self.write(CTRL_REG6_XM, [0b01100000])  # +/-12gauss
-        self.write(CTRL_REG7_XM, [0b00000000])  # Continuous-conversion mode
-        self.Magno_LSB = 0.00048
+        self.write(CTRL_REG5_XM, [0b11110000])
+        self.write(CTRL_REG6_XM, [0b01100000])
+        self.write(CTRL_REG7_XM, [0b00000000])
 
     def measure(self):
         acc = self.read_and_unpack(0x28, '<hhh')
         mag = self.read_and_unpack(0x08, '<hhh')
+        acc = tuple(acc * self.acceleration_scale for acc in acc)
+        mag = tuple(mag * self.magnetometer_scale for mag in mag)
+
         return acc, mag
 
 
 class Gyroscope(Lsm9ds0I2cDevice):
+    gyroscope_scale = 0.070
+
     def self_test(self) -> bool:
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b11010100
 
     def configure(self, args: dict):
         # initialise the gyroscope
-        self.write(CTRL_REG1_G, [0b00001111])  # Normal power mode, all axes enabled
-        self.write(CTRL_REG4_G, [0b00110000])  # Continuos update, 2000 dps full scale
+        self.write(CTRL_REG1_G, [0b00001111])
+        self.write(CTRL_REG4_G, [0b00110000])
 
     def measure(self):
         gyro = self.read_and_unpack(0x28, '<hhh')
+        gyro = tuple(gyro * self.gyroscope_scale for gyro in gyro)
         return gyro
