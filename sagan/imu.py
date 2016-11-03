@@ -96,7 +96,7 @@ class Lsm9ds0I2cDevice(I2cDevice):
     """
     def read(self, cmd, length):
         cmd |= 0x80
-        super(Lsm9ds0I2cDevice, self).read(cmd, length)
+        return super(Lsm9ds0I2cDevice, self).read(cmd, length)
 
 
 class AccelerometerMagnetometer(Lsm9ds0I2cDevice):
