@@ -1,7 +1,7 @@
 from RPi import GPIO
 
 
-class LEDS:
+class Leds:
     led1_pin = 27
     led2_pin = 22
     red_pin = 25
