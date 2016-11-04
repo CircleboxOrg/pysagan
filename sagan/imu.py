@@ -100,6 +100,7 @@ class Lsm9ds0I2cDevice(I2cDevice):
 
 
 class AccelerometerMagnetometer(Lsm9ds0I2cDevice):
+    # These values come from the LSM9DS0 data sheet p13 table3 in the row about sensitivities.
     acceleration_scale = 0.000732 * 9.80665
     magnetometer_scale = 0.00048
 
