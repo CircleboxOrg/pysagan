@@ -4,7 +4,7 @@ setup(
     name='sagan',
     version='',
     packages=['sagan'],
-    requires=['smbus-cffi'],
+    requires=['smbus-cffi', 'RPIO'],
     url='',
     license='',
     author='T A H Smith',
