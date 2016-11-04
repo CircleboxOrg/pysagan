@@ -18,6 +18,6 @@ class RgbIrSensor(I2cDevice):
         # green = (colour_data[5] << 16) | colour_data[4]
         # blue = (colour_data[7] << 16) | colour_data[6]
         measurement = tuple((colour_data[2 * i + 1] << 16) | colour_data[2 * i] for i in range(4))
-        measurement = tuple(x / (1 << 20) for x in measurement)
-
+        total = sum(measurement)
+        measurement = tuple(x / total for x in measurement)
         return measurement
