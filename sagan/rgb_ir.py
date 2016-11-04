@@ -13,8 +13,11 @@ class RgbIrSensor(I2cDevice):
 
     def measure(self):
         colour_data = self.read_and_unpack(0x0A, '<BHBHBHBH')
-        ir = (colour_data[1] << 16) | colour_data[0]
-        red = (colour_data[3] << 16) | colour_data[2]
-        green = (colour_data[5] << 16) | colour_data[4]
-        blue = (colour_data[7] << 16) | colour_data[6]
-        return red, green, blue, ir
+        # ir = (colour_data[1] << 16) | colour_data[0]
+        # red = (colour_data[3] << 16) | colour_data[2]
+        # green = (colour_data[5] << 16) | colour_data[4]
+        # blue = (colour_data[7] << 16) | colour_data[6]
+        measurement = tuple((colour_data[2 * i + 1] << 16) | colour_data[2 * i] for i in range(4))
+        measurement = tuple(x / (1 << 20) for x in measurement)
+
+        return measurement
