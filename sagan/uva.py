@@ -7,10 +7,10 @@ class UvaSensor(I2cDevice):
         return True
 
     def configure(self, args: dict) -> None:
-        self.write(0x70, [0x60])
+        self.write(0x38, [0x60])
 
     def measure(self):
         # scale from sensor is 5 uW / cm^2  / encoder count.
-        msb = self.read(0x73, 1)[0]
-        lsb = self.read(0x71, 1)[0]
+        msb = self.read(0x38, 1)[0]
+        lsb = self.read(0x39, 1)[0]
         return ((msb << 8) | lsb) * 5e-6
