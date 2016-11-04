@@ -7,6 +7,8 @@ class Leds:
     red_pin = 25
     green_pin = 23
     blue_pin = 24
+    on = False
+    off = True
 
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
@@ -24,14 +26,14 @@ class Leds:
         GPIO.setup(self.red_pin, GPIO.OUT)
         GPIO.setup(self.green_pin, GPIO.OUT)
         GPIO.setup(self.blue_pin, GPIO.OUT)
-        GPIO.output(self.led1_pin, False)
-        GPIO.output(self.led2_pin, False)
-        GPIO.output(self.red_pin, False)
-        GPIO.output(self.green_pin, False)
-        GPIO.output(self.blue_pin, False)
+        GPIO.output(self.led1_pin, self.off)
+        GPIO.output(self.led2_pin, self.off)
+        GPIO.output(self.red_pin, self.off)
+        GPIO.output(self.green_pin, self.off)
+        GPIO.output(self.blue_pin, self.off)
 
     def _set_pin(self, pin, value='on'):
-        GPIO.output(pin, value == 'on')
+        GPIO.output(pin, self.on if value == 'on' else self.off)
 
     def set_led1(self, *args):
         self._set_pin(self.led1_pin, *args)
