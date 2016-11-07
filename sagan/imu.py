@@ -118,6 +118,9 @@ class AccelerometerMagnetometer(Lsm9ds0I2cDevice):
         self.write(CTRL_REG7_XM, [0b00000000])
 
     def measure(self):
+        """
+        :return: pair of: acceleration (X, Y, Z triple in m s^-1), magnetic field (X, Y, Z triple in mgauss)
+        """
         acc = self.read_and_unpack(0x28, '<hhh')
         mag = self.read_and_unpack(0x08, '<hhh')
         acc = tuple(acc * self.acceleration_scale for acc in acc)
@@ -138,6 +141,9 @@ class Gyroscope(Lsm9ds0I2cDevice):
         self.write(CTRL_REG4_G, [0b00110000])
 
     def measure(self):
+        """
+        :return: X, Y, Z triple in degrees per second
+        """
         gyro = self.read_and_unpack(0x28, '<hhh')
         gyro = tuple(gyro * self.gyroscope_scale for gyro in gyro)
         return gyro

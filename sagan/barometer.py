@@ -87,6 +87,9 @@ class Barometer(I2cDevice):
         return t, p, h
 
     def measure(self):
+        """
+        :return: tuple of: temperature (C), pressure (Pa), humidity (% relative humidity)
+        """
         return self.apply_calibration(*self.read_raw_measurements())
 
     def self_test(self):
