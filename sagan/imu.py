@@ -122,7 +122,6 @@ class AccelerometerMagnetometer(Lsm9ds0I2cDevice):
         mag = self.read_and_unpack(0x08, '<hhh')
         acc = tuple(acc * self.acceleration_scale for acc in acc)
         mag = tuple(mag * self.magnetometer_scale for mag in mag)
-
         return acc, mag
 
 

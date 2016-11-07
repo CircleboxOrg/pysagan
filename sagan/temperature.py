@@ -14,6 +14,9 @@ class TemperatureSensor(I2cDevice):
     Interface for LM75B.
     """
     def measure(self):
+        """
+        :return: Temperature reading in C
+        """
         temp = self.read(0, 2)
         return _parse_temp_bytes(temp[0], temp[1])
 

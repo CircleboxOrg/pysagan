@@ -1,6 +1,5 @@
 from abc import abstractmethod
 
-import smbus
 import struct
 
 
@@ -8,7 +7,7 @@ class I2cDevice:
     """
     A light wrapper on top of smbus for convenience.
     """
-    def __init__(self, bus: smbus.SMBus, address):
+    def __init__(self, bus: 'smbus.SMBus', address):
         self.bus = bus
         self.address = address
 
