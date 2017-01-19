@@ -24,3 +24,4 @@ class TemperatureSensor(I2cDevice):
         # not sure what self test to do.
         # read and write a register?
         return True
+

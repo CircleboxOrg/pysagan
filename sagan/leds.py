@@ -49,3 +49,4 @@ class Leds:
 
     def set_blue(self, *args):
         self._set_pin(self.blue_pin, *args)
+

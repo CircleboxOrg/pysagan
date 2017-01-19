@@ -16,7 +16,7 @@ def _parse_rtc_bytes(time_regs):
     return RtcTimeTuple(year, month, week_day, days, hours, minutes, seconds, hundredths_of_seconds)
 
 
-class Rtc(I2cDevice):
+class RealTimeClock(I2cDevice):
     def self_test(self) -> bool:
         return True
 

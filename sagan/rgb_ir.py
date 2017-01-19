@@ -26,3 +26,19 @@ class RgbIrSensor(I2cDevice):
         """
         colour_data = self.read_and_unpack(0x0A, '<BHBHBHBH')
         return _parse_rgb_ir_bytes(colour_data)
+
+    @property
+    def red(self):
+        return self.measure()[0]
+
+    @property
+    def green(self):
+        return self.measure()[1]
+
+    @property
+    def blue(self):
+        return self.measure()[2]
+
+    @property
+    def ir(self):
+        return self.measure()[3]

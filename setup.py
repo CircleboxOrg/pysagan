@@ -5,9 +5,9 @@ setup(
     version='',
     packages=['sagan'],
     requires=['smbus-cffi', 'RPIO'],
-    url='',
+    url='www.cuberider.com',
     license='',
-    author='T A H Smith',
-    author_email='tim@cuberider.com',
+    author='T A H Smith, A W Collins',
+    author_email='sagan@cuberider.com',
     description='Python library for interfacing with sagan board'
 )
