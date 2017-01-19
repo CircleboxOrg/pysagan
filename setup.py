@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='sagan',
-    version='',
+    version='2.0',
     packages=['sagan'],
     install_requires=["smbus-cffi", "RPIO"],
     url='',
