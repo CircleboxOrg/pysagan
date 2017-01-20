@@ -21,7 +21,7 @@ class Camera:
         if not filename:
             filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
 
-        if (not len(filename) > 4) and filename[-4:] != '.jpg':
+        if len(filename) > 4 and filename[-4:] != '.jpg':
             filename += '.jpg'
 
         path = os.path.join(os.curdir, filename)
