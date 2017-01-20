@@ -118,3 +118,15 @@ class Barometer(I2cDevice):
         self.humidity_parameters[3] = (frame_2[2] << 4) | (frame_2[3] & 0x0F)
         self.humidity_parameters[4] = (frame_2[4] << 4) | (frame_2[3] & 0xF0)
         self.humidity_parameters[5] = frame_2[5]
+
+    @property
+    def temperature(self):
+        return self.measure().temperature
+
+    @property
+    def pressure(self):
+        return self.measure().pressure
+
+    @property
+    def humidity(self):
+        return self.measure().humidity

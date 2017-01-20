@@ -24,3 +24,7 @@ class UvaSensor(I2cDevice):
         msb = self.bus.read_byte_data(0x39, 0x00)
         lsb = self.bus.read_byte_data(0x38, 0x00)
         return UvaMeasurement(((msb << 8) | lsb) * 5e-2)
+
+    @property
+    def uva(self):
+        return self.measure().uva

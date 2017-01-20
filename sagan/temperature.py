@@ -31,3 +31,7 @@ class TemperatureSensor(I2cDevice):
         # read and write a register?
         return True
 
+    @property
+    def temperature(self):
+        return self.measure().temperature
+

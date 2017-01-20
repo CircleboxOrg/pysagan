@@ -8,8 +8,6 @@ RgbIrMeasurement = namedtuple(
 )
 
 
-
-
 def _parse_rgb_ir_bytes(colour_data):
     measurement = tuple((colour_data[2 * i + 1] << 16) | colour_data[2 * i] for i in range(4))
     total = sum(measurement)
