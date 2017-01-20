@@ -9,19 +9,31 @@ from .leds import Leds
 
 bus = smbus.SMBus(1)
 barometer = Barometer(bus, 0x76)
-bottom_temperature = TemperatureSensor(bus, 0x48)
-top_temperature = TemperatureSensor(bus, 0x49)
-acc_mag = Accelerometer(bus, 0x1D)
-mag = Magnetometer(bus, 0x1D)
-gyro = Gyroscope(bus, 0x6b)
-rgb_ir = RgbIrSensor(bus, 0x52)
-uva = UvaSensor(bus, 0x38)
-rtc = RealTimeClock(bus, 0x51)
+bottom_thermometer = TemperatureSensor(bus, 0x48)
+top_thermometer = TemperatureSensor(bus, 0x49)
+accelerometer = Accelerometer(bus, 0x1D)
+magnetometer = Magnetometer(bus, 0x1D)
+gyroscope = Gyroscope(bus, 0x6b)
+rgb_ir_sensor = RgbIrSensor(bus, 0x52)
+uva_sensor = UvaSensor(bus, 0x38)
+real_time_clock = RealTimeClock(bus, 0x51)
 
-sensors = [barometer, bottom_temperature, top_temperature, acc_mag, gyro, rgb_ir, uva, rtc]
+sensors = [
+    barometer,
+    bottom_thermometer,
+    top_thermometer,
+    accelerometer,
+    gyroscope,
+    rgb_ir_sensor,
+    uva_sensor,
+    real_time_clock
+]
 
 for sensor in sensors:
     sensor.configure({})
+
+for sensor in sensors:
+    assert sensor.self_test(), 'Failed to initialise sensor {}'.format(repr(sensor))
 
 leds = Leds()
 

@@ -1,4 +1,13 @@
 from .i2c import I2cDevice
+from collections import namedtuple
+
+
+RgbIrMeasurement = namedtuple(
+    'RgbIrMeasurement',
+    'red green blue ir'
+)
+
+
 
 
 def _parse_rgb_ir_bytes(colour_data):
@@ -25,7 +34,7 @@ class RgbIrSensor(I2cDevice):
         :return: R, G, B and IR Channel readings and a fraction of the total.
         """
         colour_data = self.read_and_unpack(0x0A, '<BHBHBHBH')
-        return _parse_rgb_ir_bytes(colour_data)
+        return RgbIrMeasurement(*_parse_rgb_ir_bytes(colour_data))
 
     @property
     def red(self):

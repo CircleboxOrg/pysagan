@@ -1,7 +1,11 @@
 import time
-
 from .i2c import I2cDevice
+from collections import namedtuple
 
+BarometerMeasurement = namedtuple(
+    'BarometerMeasurement',
+    'temperature pressure humidity'
+)
 
 class Barometer(I2cDevice):
     data_frame = '<HBHBH'
@@ -90,7 +94,7 @@ class Barometer(I2cDevice):
         """
         :return: tuple of: temperature (C), pressure (Pa), humidity (% relative humidity)
         """
-        return self.apply_calibration(*self.read_raw_measurements())
+        return BarometerMeasurement(*self.apply_calibration(*self.read_raw_measurements()))
 
     def self_test(self):
         id, = self.read_and_unpack(0xD0, 'B')

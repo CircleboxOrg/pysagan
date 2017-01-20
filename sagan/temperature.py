@@ -1,5 +1,11 @@
 from .i2c import I2cDevice
+from collections import namedtuple
 
+
+TemperatureMeasurement = namedtuple(
+    'TemperatureMeasurement',
+    'temperature'
+)
 
 def _parse_temp_bytes(hi, lo):
     value = ((hi << 8) | lo) >> 5
@@ -18,7 +24,7 @@ class TemperatureSensor(I2cDevice):
         :return: Temperature reading in C
         """
         temp = self.read(0, 2)
-        return _parse_temp_bytes(temp[0], temp[1])
+        return TemperatureMeasurement(_parse_temp_bytes(temp[0], temp[1]))
 
     def self_test(self):
         # not sure what self test to do.

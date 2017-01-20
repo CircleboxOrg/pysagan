@@ -35,3 +35,6 @@ class I2cDevice:
     @abstractmethod
     def self_test(self):
         pass
+
+    def __repr__(self):
+        return "{}(bus={}, address={})".format(type(self).__name__, self.bus, self.address)

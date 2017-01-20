@@ -1,7 +1,7 @@
 from .i2c import I2cDevice
 from collections import namedtuple
 
-RtcTimeTuple = namedtuple('RtcTimeTuple', 'year month week_day day hour minute second hundredths_of_seconds')
+RtcTimeMeasurement = namedtuple('RtcTimeTuple', 'year month week_day day hour minute second hundredths_of_seconds')
 
 
 def _parse_rtc_bytes(time_regs):
@@ -13,7 +13,7 @@ def _parse_rtc_bytes(time_regs):
     week_day = time_regs[5] & 0x07
     month = ((time_regs[6] & 0x10) >> 4) * 10 + (time_regs[6] & 0x0F)
     year = ((time_regs[7] & 0xF0) >> 4) * 10 + (time_regs[7] & 0x0F)
-    return RtcTimeTuple(year, month, week_day, days, hours, minutes, seconds, hundredths_of_seconds)
+    return RtcTimeMeasurement(year, month, week_day, days, hours, minutes, seconds, hundredths_of_seconds)
 
 
 class RealTimeClock(I2cDevice):

@@ -1,4 +1,11 @@
 from .i2c import I2cDevice
+from collections import namedtuple
+
+
+UvaMeasurement = namedtuple(
+    'UvaMeasurement',
+    'uva'
+)
 
 
 class UvaSensor(I2cDevice):
@@ -16,4 +23,4 @@ class UvaSensor(I2cDevice):
         # scale from sensor is 5 uW / cm^2  / encoder count.
         msb = self.bus.read_byte_data(0x39, 0x00)
         lsb = self.bus.read_byte_data(0x38, 0x00)
-        return ((msb << 8) | lsb) * 5e-2
+        return UvaMeasurement(((msb << 8) | lsb) * 5e-2)
