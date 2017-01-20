@@ -46,5 +46,6 @@ __all__ = (
     'rgb_ir_sensor',
     'uva_sensor',
     'real_time_clock',
-    'leds'
+    'leds',
+    'camera'
 )
