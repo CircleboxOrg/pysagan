@@ -37,3 +37,14 @@ for sensor in sensors:
 
 leds = Leds()
 
+__all__ = (
+    'barometer',
+    'bottom_thermometer',
+    'top_thermometer',
+    'accelerometer',
+    'gyroscope',
+    'rgb_ir_sensor',
+    'uva_sensor',
+    'real_time_clock',
+    'leds'
+)
