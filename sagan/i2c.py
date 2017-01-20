@@ -3,12 +3,13 @@ from abc import abstractmethod
 import struct
 import smbus
 
+
 class I2cDevice:
     """
     A light wrapper on top of smbus for convenience.
     """
-    def __init__(self, address=0x00):
-        self.bus = smbus.SMBus(1)
+    def __init__(self, bus, address):
+        self.bus = bus
         self.address = address
 
     def read(self, cmd, length):
@@ -32,5 +33,5 @@ class I2cDevice:
         pass
 
     @abstractmethod
-    def self_test(self) :
+    def self_test(self):
         pass

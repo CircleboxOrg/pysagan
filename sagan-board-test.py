@@ -1,10 +1,10 @@
 from smbus import SMBus
 from sagan.barometer import Barometer
 from sagan.temperature import TemperatureSensor
-from sagan.imu import AccelerometerMagnetometer, Gyroscope
+from sagan.imu import Accelerometer, Magnetometer, Gyroscope
 from sagan.rgb_ir import RgbIrSensor
 from sagan.uva import UvaSensor
-from sagan.rtc import Rtc
+from sagan.rtc import RealTimeClock
 from sagan.leds import Leds
 from time import sleep
 
@@ -12,7 +12,8 @@ bus = SMBus(1)
 barometer = Barometer(bus, 0x76)
 bottom_temperature = TemperatureSensor(bus, 0x48)
 top_temperature = TemperatureSensor(bus, 0x49)
-acc_mag = AccelerometerMagnetometer(bus, 0x1D)
+acc_mag = Accelerometer(bus, 0x1D)
+mag = Magnetometer(bus, 0x1D)
 gyro = Gyroscope(bus, 0x6b)
 rgb_ir = RgbIrSensor(bus, 0x52)
 uva = UvaSensor(bus, 0x38)
