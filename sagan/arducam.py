@@ -24,10 +24,9 @@ class Camera:
         if len(filename) > 4 and filename[-4:] != '.jpg':
             filename += '.jpg'
 
-        path = os.path.join(os.curdir, filename)
         command = '{} -c {} {}x{}'.format(
             CAPTURE_EXECUTABLE,
-            path,
+            filename,
             X_RESOLUTION,
             Y_RESOLUTION
         )
