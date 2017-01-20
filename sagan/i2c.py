@@ -1,14 +1,14 @@
 from abc import abstractmethod
 
 import struct
-
+import smbus
 
 class I2cDevice:
     """
     A light wrapper on top of smbus for convenience.
     """
-    def __init__(self, bus: 'smbus.SMBus', address):
-        self.bus = bus
+    def __init__(self, address=0x00):
+        self.bus = smbus.SMBus(1)
         self.address = address
 
     def read(self, cmd, length):
@@ -28,9 +28,9 @@ class I2cDevice:
         return self.write(cmd, [c for c in b])
 
     @abstractmethod
-    def configure(self, args: dict) -> None:
+    def configure(self, args):
         pass
 
     @abstractmethod
-    def self_test(self) -> bool:
+    def self_test(self) :
         pass

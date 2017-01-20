@@ -2,11 +2,11 @@ from .i2c import I2cDevice
 
 
 class UvaSensor(I2cDevice):
-    def self_test(self) -> bool:
+    def self_test(self):
         # There is nothing to do here, only readable registers are the output data
         return True
 
-    def configure(self, args: dict) -> None:
+    def configure(self, args):
         self.bus.write_byte(0x38, 0x60)
 
     def measure(self):

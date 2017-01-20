@@ -104,11 +104,11 @@ class Accelerometer(Lsm9ds0I2cDevice):
     acceleration_scale = 0.000732 * 9.80665
     magnetometer_scale = 0.00048
 
-    def self_test(self) -> bool:
+    def self_test(self):
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b01001001
 
-    def configure(self, args: dict) -> None:
+    def configure(self, args):
         self.write(CTRL_REG1_XM, [0b01100111])
         self.write(CTRL_REG2_XM, [0b00100000])
 
@@ -145,11 +145,11 @@ class Magnetometer(Lsm9ds0I2cDevice):
     acceleration_scale = 0.000732 * 9.80665
     magnetometer_scale = 0.00048
 
-    def self_test(self) -> bool:
+    def self_test(self):
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b01001001
 
-    def configure(self, args: dict) -> None:
+    def configure(self, args):
         self.write(CTRL_REG1_XM, [0b01100111])
         self.write(CTRL_REG2_XM, [0b00100000])
 
@@ -184,11 +184,11 @@ class Magnetometer(Lsm9ds0I2cDevice):
 class Gyroscope(Lsm9ds0I2cDevice):
     gyroscope_scale = 0.070
 
-    def self_test(self) -> bool:
+    def self_test(self):
         id, = self.read_and_unpack(0x0F, 'B')
         return id == 0b11010100
 
-    def configure(self, args: dict):
+    def configure(self, args):
         # initialise the gyroscope
         self.write(CTRL_REG1_G, [0b00001111])
         self.write(CTRL_REG4_G, [0b00110000])

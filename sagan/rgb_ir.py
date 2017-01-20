@@ -11,11 +11,11 @@ def _parse_rgb_ir_bytes(colour_data):
 
 
 class RgbIrSensor(I2cDevice):
-    def self_test(self) -> bool:
+    def self_test(self):
         id = self.read(0x06, 1)[0]
         return id == 0xB2
 
-    def configure(self, args: dict) -> None:
+    def configure(self, args):
         # set light sensor enabled, colour sensing mode.
         self.pack_and_write(0x00, 'B', 0b00000110)
         super().configure(args)
