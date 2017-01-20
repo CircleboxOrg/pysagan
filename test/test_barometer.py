@@ -103,7 +103,7 @@ This test uses cases generated with the following C language code:
 
 """
 
-from sagan.barometer import Barometer
+from sagan.baro import Barometer
 
 
 def assert_almost_equal(x, y, rel_tolerance=1e-4):

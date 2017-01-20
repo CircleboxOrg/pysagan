@@ -1,11 +1,12 @@
 import smbus
-from .barometer import Barometer
+from .baro import Barometer
 from .temperature import TemperatureSensor
 from .imu import Accelerometer, Magnetometer, Gyroscope
 from .rgb_ir import RgbIrSensor
 from .uva import UvaSensor
 from .rtc import RealTimeClock
 from .leds import Leds
+from .arducam import Camera
 
 bus = smbus.SMBus(1)
 barometer = Barometer(bus, 0x76)
@@ -36,6 +37,7 @@ for sensor in sensors:
     assert sensor.self_test(), 'Failed to initialise sensor {}'.format(repr(sensor))
 
 leds = Leds()
+camera = Camera()
 
 __all__ = (
     'barometer',

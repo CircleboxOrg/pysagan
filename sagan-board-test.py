@@ -1,5 +1,5 @@
 from smbus import SMBus
-from sagan.barometer import Barometer
+from sagan.baro import Barometer
 from sagan.temperature import TemperatureSensor
 from sagan.imu import Accelerometer, Magnetometer, Gyroscope
 from sagan.rgb_ir import RgbIrSensor
