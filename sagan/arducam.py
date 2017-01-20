@@ -32,4 +32,4 @@ class Camera:
         )
         status = subprocess.call(command, shell=True)
         assert status == 0, "Failed to capture image with command {}".format(command)
-        return CameraCaptureResult(path)
+        return CameraCaptureResult(filename)
