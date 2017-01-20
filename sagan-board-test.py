@@ -17,7 +17,7 @@ mag = Magnetometer(bus, 0x1D)
 gyro = Gyroscope(bus, 0x6b)
 rgb_ir = RgbIrSensor(bus, 0x52)
 uva = UvaSensor(bus, 0x38)
-rtc = Rtc(bus, 0x51)
+rtc = RealTimeClock(bus, 0x51)
 
 sensors = [barometer, bottom_temperature, top_temperature, acc_mag, gyro, rgb_ir, uva, rtc]
 
