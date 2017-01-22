@@ -2,7 +2,8 @@
 setup.cfg
 setup.py
 sagan/__init__.py
-sagan/barometer.py
+sagan/arducam.py
+sagan/baro.py
 sagan/i2c.py
 sagan/imu.py
 sagan/leds.py

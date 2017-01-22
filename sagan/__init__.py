@@ -45,6 +45,7 @@ __all__ = (
     'top_thermometer',
     'accelerometer',
     'gyroscope',
+    'magnetometer',
     'rgb_ir_sensor',
     'uva_sensor',
     'real_time_clock',
