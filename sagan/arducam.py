@@ -3,8 +3,8 @@ from collections import namedtuple
 from datetime import datetime
 
 CAPTURE_EXECUTABLE = 'ov2640_capture'
-X_RESOLUTION = 800
-Y_RESOLUTION = 600
+X_RESOLUTION = 1600
+Y_RESOLUTION = 1200
 
 CameraCaptureResult = namedtuple(
     'CameraCaptureResult',
