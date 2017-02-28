@@ -1,4 +1,5 @@
 from .i2c import I2cDevice
+from .telemetry import Telemetry
 from collections import namedtuple
 
 
@@ -24,7 +25,9 @@ class TemperatureSensor(I2cDevice):
         :return: Temperature reading in C
         """
         temp = self.read(0, 2)
-        return TemperatureMeasurement(_parse_temp_bytes(temp[0], temp[1]))
+        result = TemperatureMeasurement(_parse_temp_bytes(temp[0], temp[1]))
+        Telemetry.update("bot" if self.address == 0x48 else "top", str(result.temperature))
+        return result
 
     def self_test(self):
         # not sure what self test to do.

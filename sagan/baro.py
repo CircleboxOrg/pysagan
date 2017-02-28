@@ -1,6 +1,7 @@
 import time
 from .i2c import I2cDevice
 from collections import namedtuple
+from .telemetry import Telemetry
 
 BarometerMeasurement = namedtuple(
     'BarometerMeasurement',
@@ -88,6 +89,10 @@ class Barometer(I2cDevice):
             h = 100
         elif h < 0:
             h = 0
+
+        Telemetry.update("bar", "{t: {}, p: {}, h: {}}".format(
+            str(t), str(p), str(h)
+        ))
         return t, p, h
 
     def measure(self):

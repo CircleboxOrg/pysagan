@@ -1,4 +1,5 @@
 import subprocess
+from .telemetry import Telemetry
 from collections import namedtuple
 from datetime import datetime
 
@@ -28,5 +29,8 @@ class Camera:
             Y_RESOLUTION
         )
         status = subprocess.call(command, shell=True)
+        camera_result = CameraCaptureResult(filename)
+
+        #todo - send image through telemetry
         assert status == 0, "Failed to capture image with command {}".format(command)
-        return CameraCaptureResult(filename)
+        return camera_result

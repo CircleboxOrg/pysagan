@@ -1,5 +1,6 @@
 import smbus
 import time
+import os
 from .baro import Barometer
 from .temperature import TemperatureSensor
 from .imu import Accelerometer, Magnetometer, Gyroscope
@@ -8,7 +9,6 @@ from .uva import UvaSensor
 from .rtc import RealTimeClock
 from .leds import Leds
 from .arducam import Camera
-
 
 bus = smbus.SMBus(1)
 barometer = Barometer(bus, 0x76)

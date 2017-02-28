@@ -1,5 +1,7 @@
 from .i2c import I2cDevice
+from .telemetry import Telemetry
 from collections import namedtuple
+
 
 # LSM9DS0 Gyro Registers
 CTRL_REG1_G = 0x20
@@ -70,7 +72,16 @@ class Accelerometer(Lsm9ds0I2cDevice):
         """
         acc = self.read_and_unpack(0x28, '<hhh')
         acc = tuple(acc * self.acceleration_scale for acc in acc)
-        return AccelerometerMeasurement(*acc)
+        result = AccelerometerMeasurement(*acc)
+
+        Telemetry.update("acc", "{x: {}, y: {}, z: {}}".format(
+            str(result[0]), str(result[1]), str(result[2])
+        ))
+
+        Telemetry.update("accy", result.y)
+        Telemetry.update("accz", result.z)
+
+        return result
 
     @property
     def x(self):
@@ -109,7 +120,13 @@ class Magnetometer(Lsm9ds0I2cDevice):
         """
         mag = self.read_and_unpack(0x08, '<hhh')
         mag = tuple(mag * self.magnetometer_scale for mag in mag)
-        return MagnetometerMeasurement(*mag)
+        result = MagnetometerMeasurement(*mag)
+
+        Telemetry.update("mag", "{x: {}, y: {}, z: {}}".format(
+            str(result[0]), str(result[1]), str(result[2])
+        ))
+
+        return result
 
     @property
     def x(self):
@@ -142,7 +159,13 @@ class Gyroscope(Lsm9ds0I2cDevice):
         """
         gyro = self.read_and_unpack(0x28, '<hhh')
         gyro = tuple(gyro * self.gyroscope_scale for gyro in gyro)
-        return AccelerometerMeasurement(*gyro)
+        result = AccelerometerMeasurement(*gyro)
+
+        Telemetry.update("gyr", "{x: {}, y: {}, z: {}}".format(
+            str(result[0]), str(result[1]), str(result[2])
+        ))
+
+        return result
 
     @property
     def x(self):

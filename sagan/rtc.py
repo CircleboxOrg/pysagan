@@ -1,4 +1,5 @@
 from .i2c import I2cDevice
+from .telemetry import Telemetry
 from collections import namedtuple
 
 RtcTimeMeasurement = namedtuple('RtcTimeTuple', 'year month week_day day hour minute second hundredths_of_seconds')
@@ -30,4 +31,16 @@ class RealTimeClock(I2cDevice):
         :rtype: RtcTimeTuple
         """
         time_regs = self.read_and_unpack(0x00, 'B' * 8)
-        return _parse_rtc_bytes(time_regs)
+        result = _parse_rtc_bytes(time_regs)
+        Telemetry.update("rtc", "{hs: {}, s: {}, m: {}, h: {}, d: {}, wd: {}, mo: {}, y: {}}".format(
+            str(result.hundredths_of_seconds),
+            str(result.seconds),
+            str(result.minutes),
+            str(result.hours),
+            str(result.days),
+            str(result.week_day),
+            str(result.month),
+            str(result.year),
+        ))
+
+        return result
