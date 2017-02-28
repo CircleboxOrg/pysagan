@@ -1,4 +1,4 @@
-_FIFO = open('/tmp/sagan', 'w')
+_FIFO = open('/tmp/sagan_telemetry', 'w')
 
 
 class Telemetry:
