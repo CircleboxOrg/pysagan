@@ -7,6 +7,7 @@ class Telemetry:
     def update(prefix: str, data: str):
         try:
             _FIFO.write("{}:{}\n".format(prefix, data))
+            _FIFO.flush()
         except:
             return False
         return True
