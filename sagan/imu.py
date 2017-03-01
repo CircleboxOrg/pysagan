@@ -175,7 +175,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("gyro", "{}".format(
+        Telemetry.update("gyr", "{}".format(
             json.dumps(packet)
         ))
 
