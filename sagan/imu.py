@@ -161,7 +161,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
         gyro = tuple(gyro * self.gyroscope_scale for gyro in gyro)
         result = AccelerometerMeasurement(*gyro)
 
-        Telemetry.update("gyr", "{x: {}, y: {}, z: {}}".format(
+        Telemetry.update("gyro", "{x: {}, y: {}, z: {}}".format(
             str(gyro[0]), str(gyro[1]), str(gyro[2])
         ))
 
