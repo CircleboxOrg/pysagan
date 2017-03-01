@@ -75,7 +75,7 @@ class Accelerometer(Lsm9ds0I2cDevice):
         result = AccelerometerMeasurement(*acc)
 
         Telemetry.update("acc", "{x: {}, y: {}, z: {}}".format(
-            str(result[0]), str(result[1]), str(result[2])
+            str(acc[0]), str(acc[1]), str(acc[2])
         ))
 
         Telemetry.update("accy", result.y)
@@ -123,7 +123,7 @@ class Magnetometer(Lsm9ds0I2cDevice):
         result = MagnetometerMeasurement(*mag)
 
         Telemetry.update("mag", "{x: {}, y: {}, z: {}}".format(
-            str(result[0]), str(result[1]), str(result[2])
+            str(mag[0]), str(mag[1]), str(mag[2])
         ))
 
         return result
@@ -162,7 +162,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
         result = AccelerometerMeasurement(*gyro)
 
         Telemetry.update("gyr", "{x: {}, y: {}, z: {}}".format(
-            str(result[0]), str(result[1]), str(result[2])
+            str(gyro[0]), str(gyro[1]), str(gyro[2])
         ))
 
         return result
@@ -178,3 +178,4 @@ class Gyroscope(Lsm9ds0I2cDevice):
     @property
     def z(self):
         return self.measure()[2]
+
