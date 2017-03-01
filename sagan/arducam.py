@@ -2,6 +2,7 @@ import subprocess
 from .telemetry import Telemetry
 from collections import namedtuple
 from datetime import datetime
+import base64
 
 CAPTURE_EXECUTABLE = 'ov2640_capture'
 X_RESOLUTION = 1600
@@ -19,7 +20,7 @@ class Camera:
         if filename is not None:
             try:
                 with open(filename, 'rb') as imgText:
-                     return imgText.read()
+                     return base64.encodebytes(imgText.read())
             except FileNotFoundError:
                 pass
         return ""
