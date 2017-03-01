@@ -14,6 +14,16 @@ CameraCaptureResult = namedtuple(
 
 
 class Camera:
+
+    def _image_to_string(self, filename=None):
+        if filename is not None:
+            try:
+                with open(filename, 'rb') as imgText:
+                     return imgText.read()
+            except FileNotFoundError:
+                pass
+        return ""
+
     def capture(self, filename=None):
 
         if not filename:
@@ -29,8 +39,8 @@ class Camera:
             Y_RESOLUTION
         )
         status = subprocess.call(command, shell=True)
-        camera_result = CameraCaptureResult(filename)
+        Telemetry.update("cam", self._image_to_string(filename))
 
-        #todo - send image through telemetry
+        camera_result = CameraCaptureResult(filename)
         assert status == 0, "Failed to capture image with command {}".format(command)
         return camera_result
