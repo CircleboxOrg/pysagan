@@ -20,7 +20,8 @@ class Camera:
         if filename is not None:
             try:
                 with open(filename, 'rb') as imgText:
-                     return base64.encodebytes(imgText.read())
+                    result = base64.encodebytes(imgText.read())
+                    return result
             except FileNotFoundError:
                 pass
         return ""
