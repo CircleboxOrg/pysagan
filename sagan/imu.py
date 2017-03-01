@@ -73,37 +73,6 @@ class Accelerometer(Lsm9ds0I2cDevice):
         acc = self.read_and_unpack(0x28, '<hhh')
         acc = tuple(acc * self.acceleration_scale for acc in acc)
         result = AccelerometerMeasurement(*acc)
-        try:
-            print("result")
-            print(result)
-        except:
-            print(None)
-        try:
-            print("length")
-            print(len(result))
-        except:
-            print(None)
-        try:
-            print("type")
-            print(type(result))
-        except:
-            print(None)
-        try:
-            print("x")
-            print(result[0])
-        except:
-            print(None)
-        try:
-            print("y")
-            print(result[1])
-        except:
-            print(None)
-        try:
-            print("z")
-            print(result[2])
-        except:
-            print(None)
-
         packet = {
             "x": str(result[0]),
             "y": str(result[1]),
