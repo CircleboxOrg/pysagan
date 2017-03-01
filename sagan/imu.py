@@ -1,7 +1,7 @@
 from .i2c import I2cDevice
 from .telemetry import Telemetry
 from collections import namedtuple
-
+import json
 
 # LSM9DS0 Gyro Registers
 CTRL_REG1_G = 0x20
@@ -104,9 +104,16 @@ class Accelerometer(Lsm9ds0I2cDevice):
         except:
             print(None)
 
-        Telemetry.update("acc", "{x: {}, y: {}, z: {}}".format(
-            str(result[0]), str(result[1]), str(result[2])
+        packet = {
+            "x": str(result[0]),
+            "y": str(result[1]),
+            "z": str(result[2])
+        }
+
+        Telemetry.update("acc", "{}".format(
+            json.dumps(packet)
         ))
+
         return result
 
     @property
@@ -148,8 +155,14 @@ class Magnetometer(Lsm9ds0I2cDevice):
         mag = tuple(mag * self.magnetometer_scale for mag in mag)
         result = MagnetometerMeasurement(*mag)
 
-        Telemetry.update("mag", "{x: {}, y: {}, z: {}}".format(
-            str(result[0]), str(result[1]), result(mag[2])
+        packet = {
+            "x": str(result[0]),
+            "y": str(result[1]),
+            "z": str(result[2])
+        }
+
+        Telemetry.update("mag", "{}".format(
+            json.dumps(packet)
         ))
 
         return result
@@ -187,8 +200,14 @@ class Gyroscope(Lsm9ds0I2cDevice):
         gyro = tuple(gyro * self.gyroscope_scale for gyro in gyro)
         result = AccelerometerMeasurement(*gyro)
 
-        Telemetry.update("gyro", "{x: {}, y: {}, z: {}}".format(
-            str(result[0]), str(result[1]), str(result[2])
+        packet = {
+            "x": str(result[0]),
+            "y": str(result[1]),
+            "z": str(result[2])
+        }
+
+        Telemetry.update("gyro", "{}".format(
+            json.dumps(packet)
         ))
 
         return result
