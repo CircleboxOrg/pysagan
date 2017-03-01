@@ -2,11 +2,12 @@ from distutils.core import setup
 
 setup(
     name='sagan',
-    version='2.3.0',
+    version='3.0.0',
     packages=['sagan'],
     install_requires=["smbus-cffi", "RPIO"],
     url='',
     license='',
     author='T A H Smith, A W Collins',
     author_email='sagan@cuberider.com',
-    description='Python library for interfacing with sagan board')
+    description='Python library for interfacing with sagan board'
+)

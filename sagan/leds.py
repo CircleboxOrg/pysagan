@@ -1,5 +1,5 @@
 from RPi import GPIO
-
+from .telemetry import Telemetry
 
 class Leds:
     led1_pin = 27
@@ -36,17 +36,22 @@ class Leds:
         GPIO.output(pin, self.on if value == 'on' else self.off)
 
     def set_led1(self, *args):
+        Telemetry.update("ld1", "{}".format(*args))
         self._set_pin(self.led1_pin, *args)
 
     def set_led2(self, *args):
+        Telemetry.update("ld2", "{}".format(*args))
         self._set_pin(self.led2_pin, *args)
 
     def set_red(self, *args):
+        Telemetry.update("ldr", "{}".format(*args))
         self._set_pin(self.red_pin, *args)
 
     def set_green(self, *args):
+        Telemetry.update("ldg", "{}".format(*args))
         self._set_pin(self.green_pin, *args)
 
     def set_blue(self, *args):
+        Telemetry.update("ldb", "{}".format(*args))
         self._set_pin(self.blue_pin, *args)
 

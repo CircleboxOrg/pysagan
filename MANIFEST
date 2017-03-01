@@ -9,6 +9,7 @@ sagan/imu.py
 sagan/leds.py
 sagan/rgb_ir.py
 sagan/rtc.py
+sagan/telemetry.py
 sagan/temperature.py
 sagan/uva.py
 test/test_barometer.py
