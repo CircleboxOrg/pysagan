@@ -1,3 +1,4 @@
+import json
 from .i2c import I2cDevice
 from .telemetry import Telemetry
 from collections import namedtuple
@@ -15,10 +16,15 @@ def _parse_rgb_ir_bytes(colour_data):
     if total == 0:
         return 0, 0, 0, 0
     measurement = tuple(x / total for x in measurement)
-    Telemetry.update("rgb", "{r: {}, g: {}, b: {}, ir: {}}".format(
-        str(measurement[3]), str(measurement[1]),
-        str(measurement[2]), str(measurement[0])
-    ))
+
+    packet = {
+        "r": str(measurement[3]),
+        "g": str(measurement[1]),
+        "b": str(measurement[2]),
+        "ir": str(measurement[0])
+    }
+
+    Telemetry.update("rgb", json.dumps(packet))
     return measurement[3], measurement[1], measurement[2], measurement[0]
 
 

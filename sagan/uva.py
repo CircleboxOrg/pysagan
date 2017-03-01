@@ -1,3 +1,4 @@
+import json
 from .i2c import I2cDevice
 from .telemetry import Telemetry
 from collections import namedtuple
@@ -25,7 +26,10 @@ class UvaSensor(I2cDevice):
         msb = self.bus.read_byte_data(0x39, 0x00)
         lsb = self.bus.read_byte_data(0x38, 0x00)
         result = UvaMeasurement(((msb << 8) | lsb) * 5e-2)
-        Telemetry.update("uva", str(result.uva))
+        packet = {
+            "uva": str(result.uva)
+        }
+        Telemetry.update("uva", json.dumps(packet))
         return result
 
     @property
