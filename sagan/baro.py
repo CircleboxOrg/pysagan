@@ -1,4 +1,4 @@
-import json
+
 import time
 from .i2c import I2cDevice
 from collections import namedtuple
@@ -97,7 +97,7 @@ class Barometer(I2cDevice):
             "h": h
         }
 
-        Telemetry.update("bar", json.dumps(packet))
+        Telemetry.update("bar", packet)
         return t, p, h
 
     def measure(self):

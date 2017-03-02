@@ -1,4 +1,4 @@
-import json
+
 from .i2c import I2cDevice
 from .telemetry import Telemetry
 from collections import namedtuple
@@ -30,7 +30,7 @@ class TemperatureSensor(I2cDevice):
         packet = {
             "temperature": str(result.temperature)
         }
-        Telemetry.update("bot" if self.address == 0x48 else "top", json.dumps(packet))
+        Telemetry.update("bot" if self.address == 0x48 else "top", packet)
         return result
 
     def self_test(self):

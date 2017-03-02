@@ -26,8 +26,8 @@ AccelerometerMeasurement = namedtuple(
 )
 
 
-GryoscopeMeasurement = namedtuple(
-    'GryoscopeMeasurement',
+GyroscopeMeasurement = namedtuple(
+    'GyroscopeMeasurement',
     'x y z'
 )
 
@@ -79,10 +79,7 @@ class Accelerometer(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("acc", "{}".format(
-            json.dumps(packet)
-        ))
-
+        Telemetry.update("acc", "{}".format(packet)
         return result
 
     @property
@@ -130,9 +127,7 @@ class Magnetometer(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("mag", "{}".format(
-            json.dumps(packet)
-        ))
+        Telemetry.update("mag", "{}".format(packet)
 
         return result
 
@@ -167,7 +162,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
         """
         gyro = self.read_and_unpack(0x28, '<hhh')
         gyro = tuple(gyro * self.gyroscope_scale for gyro in gyro)
-        result = AccelerometerMeasurement(*gyro)
+        result = GyroscopeMeasurement(*gyro)
 
         packet = {
             "x": str(result[0]),
@@ -175,9 +170,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("gyr", "{}".format(
-            json.dumps(packet)
-        ))
+        Telemetry.update("gyr", "{}".format(packet)
 
         return result
 

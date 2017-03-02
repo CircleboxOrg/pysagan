@@ -1,4 +1,4 @@
-import json
+
 from .i2c import I2cDevice
 from .telemetry import Telemetry
 from collections import namedtuple
@@ -29,7 +29,7 @@ class UvaSensor(I2cDevice):
         packet = {
             "uva": str(result.uva)
         }
-        Telemetry.update("uva", json.dumps(packet))
+        Telemetry.update("uva", packet)
         return result
 
     @property

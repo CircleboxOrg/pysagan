@@ -1,4 +1,4 @@
-import json
+
 from .i2c import I2cDevice
 from .telemetry import Telemetry
 from collections import namedtuple
@@ -45,6 +45,6 @@ class RealTimeClock(I2cDevice):
             "y": str(result.year),
         }
 
-        Telemetry.update("rtc", json.dumps(packet))
+        Telemetry.update("rtc", packet)
 
         return result
