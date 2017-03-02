@@ -42,9 +42,8 @@ class Camera:
                 pass
         return ""
 
-    def capture(self, filename=None, width=X_RESOLUTION, height=Y_RESOLUTION):
-
-        if not filename:
+    def capture(self, *kwargs):
+        if not kwargs["filename"]:
             filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
 
         if len(filename) > 4 and filename[-4:] != '.jpg':
@@ -53,8 +52,8 @@ class Camera:
         command = '{} -c {} {}x{}'.format(
             CAPTURE_EXECUTABLE,
             filename,
-            width,
-            height
+            kwargs["width"],
+            kwargs["height"]
         )
 
         status = subprocess.call(command, shell=True)
