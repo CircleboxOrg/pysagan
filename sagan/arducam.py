@@ -40,7 +40,10 @@ class Camera:
         return ""
 
     def capture(self, **kwargs):
-        filename = kwargs["filename"]
+        filename = kwargs.get("filename", None)
+        width = kwargs.get("width", None)
+        height = kwargs.get("height", None)
+
         if not filename:
             filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
 
@@ -50,8 +53,8 @@ class Camera:
         command = '{} -c {} {}x{}'.format(
             CAPTURE_EXECUTABLE,
             filename,
-            kwargs["width"],
-            kwargs["height"]
+            width,
+            height
         )
 
         status = subprocess.call(command, shell=True)
