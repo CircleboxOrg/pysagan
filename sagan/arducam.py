@@ -27,9 +27,6 @@ CameraCaptureResult = namedtuple(
     'filename'
 )
 
-
-
-
 class Camera:
 
     def _image_to_string(self, filename=None):
@@ -42,7 +39,7 @@ class Camera:
                 pass
         return ""
 
-    def capture(self, *kwargs):
+    def capture(self, **kwargs):
         filename = kwargs["filename"]
         if not filename:
             filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
