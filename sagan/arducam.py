@@ -40,12 +40,9 @@ class Camera:
         return ""
 
     def capture(self, **kwargs):
-        filename = kwargs.get("filename", None)
-        width = kwargs.get("width", None)
-        height = kwargs.get("height", None)
-
-        if not filename:
-            filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
+        filename = kwargs.get("filename", '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S')))
+        width = kwargs.get("width", X_RESOLUTION)
+        height = kwargs.get("height", Y_RESOLUTION)
 
         if len(filename) > 4 and filename[-4:] != '.jpg':
             filename += '.jpg'
@@ -62,9 +59,9 @@ class Camera:
             "src": self._image_to_string(filename)
         }
         Telemetry.update("cam", packet)
-        camera_result = CameraCaptureResult(filename)
-        assert status == 0, "Failed to capture image with command {}".format(command)
-        return camera_result
+        #camera_result = CameraCaptureResult(filename)
+        #assert status == 0, "Failed to capture image with command {}".format(command)
+        return ""
 
     def capture_low(self, filename=None):
         return self.capture(filename=filename, width=resolutions[2][0], height=resolutions[2][1])
