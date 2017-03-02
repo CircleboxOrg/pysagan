@@ -43,7 +43,8 @@ class Camera:
         return ""
 
     def capture(self, *kwargs):
-        if not kwargs["filename"]:
+        filename = kwargs["filename"]
+        if not filename:
             filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
 
         if len(filename) > 4 and filename[-4:] != '.jpg':
