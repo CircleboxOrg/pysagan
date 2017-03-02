@@ -170,8 +170,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("gyr", "{}".format(packet)
-
+        Telemetry.update("gyr", "{}".format(packet))
         return result
 
     @property
