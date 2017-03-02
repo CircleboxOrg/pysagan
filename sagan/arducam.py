@@ -3,6 +3,7 @@ from .telemetry import Telemetry
 from collections import namedtuple
 from datetime import datetime
 import base64
+import json
 
 CAPTURE_EXECUTABLE = 'ov2640_capture'
 X_RESOLUTION = 1600
@@ -40,9 +41,12 @@ class Camera:
             X_RESOLUTION,
             Y_RESOLUTION
         )
-        status = subprocess.call(command, shell=True)
-        Telemetry.update("cam", self._image_to_string(filename))
 
+        status = subprocess.call(command, shell=True)
+        packet = {
+            "src": self._image_to_string(filename)
+        }
+        Telemetry.update("cam", json.dumps(packet))
         camera_result = CameraCaptureResult(filename)
         assert status == 0, "Failed to capture image with command {}".format(command)
         return camera_result
