@@ -21,7 +21,7 @@ class Camera:
         if filename is not None:
             try:
                 with open(filename, 'rb') as imgText:
-                    result = "START_BASE_64{}END_BASE_64".format(base64.encodebytes(imgText.read()))
+                    result = "START_BASE_64{}END_BASE_64".format(base64.b64encode(imgText.read()))
                     return result
             except FileNotFoundError:
                 pass
