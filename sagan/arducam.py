@@ -59,8 +59,8 @@ class Camera:
             "src": self._image_to_string(filename)
         }
         Telemetry.update("cam", packet)
-        #camera_result = CameraCaptureResult(filename)
-        #assert status == 0, "Failed to capture image with command {}".format(command)
+        camera_result = CameraCaptureResult(filename)
+        assert status == 0, "Failed to capture image with command {}".format(command)
         return ""
 
     def capture_low(self, filename=None):
