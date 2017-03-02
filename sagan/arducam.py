@@ -6,13 +6,28 @@ import base64
 import json
 
 CAPTURE_EXECUTABLE = 'ov2640_capture'
-X_RESOLUTION = 1600
-Y_RESOLUTION = 1200
+
+resolutions = [
+    (160, 120),
+    (176, 144),
+    (320, 240),
+    (352, 288),
+    (640, 480),
+    (800, 600),
+    (1024, 768),
+    (1280, 960),
+    (1600, 1200),
+]
+
+X_RESOLUTION = resolutions[5][0]
+Y_RESOLUTION = resolutions[5][1]
 
 CameraCaptureResult = namedtuple(
     'CameraCaptureResult',
     'filename'
 )
+
+
 
 
 class Camera:
@@ -27,7 +42,7 @@ class Camera:
                 pass
         return ""
 
-    def capture(self, filename=None):
+    def capture(self, filename=None, width=X_RESOLUTION, height=Y_RESOLUTION):
 
         if not filename:
             filename = '{}.jpg'.format(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
@@ -38,8 +53,8 @@ class Camera:
         command = '{} -c {} {}x{}'.format(
             CAPTURE_EXECUTABLE,
             filename,
-            X_RESOLUTION,
-            Y_RESOLUTION
+            width,
+            height
         )
 
         status = subprocess.call(command, shell=True)
@@ -50,3 +65,12 @@ class Camera:
         camera_result = CameraCaptureResult(filename)
         assert status == 0, "Failed to capture image with command {}".format(command)
         return camera_result
+
+    def capture_low(self, filename=None):
+        return self.capture(filename=filename, width=resolutions[2][0], height=resolutions[2][1])
+
+    def capture_moderate(self, filename=None):
+        return self.capture(filename=filename, width=resolutions[5][0], height=resolutions[5][1])
+
+    def capture_high(self, filename=None):
+        return self.capture(filename=filename, width=resolutions[8][0], height=resolutions[8][1])
