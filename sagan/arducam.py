@@ -26,7 +26,6 @@ CameraCaptureResult = namedtuple(
     'filename'
 )
 
-
 def _image_to_string(self, filename=None):
     if filename is not None:
         try:
@@ -35,7 +34,7 @@ def _image_to_string(self, filename=None):
                 return result
         except FileNotFoundError:
             pass
-    return ""
+    return "error"
 
 
 class Camera:
