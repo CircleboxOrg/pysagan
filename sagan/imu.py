@@ -79,7 +79,7 @@ class Accelerometer(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("acc", "{}".format(packet))
+        Telemetry.update("acc", packet)
         return result
 
     @property
@@ -127,7 +127,7 @@ class Magnetometer(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("mag", "{}".format(packet))
+        Telemetry.update("mag", packet)
 
         return result
 
@@ -170,7 +170,7 @@ class Gyroscope(Lsm9ds0I2cDevice):
             "z": str(result[2])
         }
 
-        Telemetry.update("gyr", "{}".format(packet))
+        Telemetry.update("gyr", packet)
         return result
 
     @property
