@@ -27,7 +27,7 @@ CameraCaptureResult = namedtuple(
 )
 
 
-def _image_to_string(self, filename=None):
+def _image_to_string(filename=None):
     if filename is not None:
         try:
             with open(filename, 'rb') as imgText:
