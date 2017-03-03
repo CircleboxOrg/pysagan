@@ -26,6 +26,7 @@ CameraCaptureResult = namedtuple(
     'filename'
 )
 
+
 def _image_to_string(self, filename=None):
     if filename is not None:
         try:
