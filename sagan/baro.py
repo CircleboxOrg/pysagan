@@ -10,7 +10,7 @@ BarometerMeasurement = namedtuple(
 )
 
 class Barometer(I2cDevice):
-    data_frame = '<HBHBH'
+    data_frame = '>HBHBH'
     parameters_frame_1 = '<HhhHhhhhhhhhB'
     parameters_frame_2 = '<hBBBBb'
     mode = 0b1  # 'Forced' mode

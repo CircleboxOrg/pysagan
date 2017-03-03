@@ -68,7 +68,7 @@ class Accelerometer(Lsm9ds0I2cDevice):
 
     def measure(self):
         """
-        :return: acceleration (X, Y, Z triple in m s^-1)
+        :return: acceleration (X, Y, Z triple in m s^-2)
         """
         acc = self.read_and_unpack(0x28, '<hhh')
         acc = tuple(acc * self.acceleration_scale for acc in acc)

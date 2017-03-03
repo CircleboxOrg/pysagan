@@ -27,17 +27,18 @@ CameraCaptureResult = namedtuple(
 )
 
 
-class Camera:
-    def _image_to_string(self, filename=None):
-        if filename is not None:
-            try:
-                with open(filename, 'rb') as imgText:
-                    result = "START_BASE_64{}END_BASE_64".format(base64.b64encode(imgText.read()))
-                    return result
-            except FileNotFoundError:
-                pass
-        return ""
+def _image_to_string(self, filename=None):
+    if filename is not None:
+        try:
+            with open(filename, 'rb') as imgText:
+                result = "START_BASE_64{}END_BASE_64".format(base64.b64encode(imgText.read()))
+                return result
+        except FileNotFoundError:
+            pass
+    return ""
 
+
+class Camera:
     def capture(self, filename=None, width=X_RESOLUTION, height=Y_RESOLUTION):
 
         if not filename:
@@ -55,7 +56,7 @@ class Camera:
 
         status = subprocess.call(command, shell=True)
         packet = {
-            "src": self._image_to_string(filename)
+            "src": _image_to_string(filename)
         }
         Telemetry.update("cam", packet)
         camera_result = CameraCaptureResult(filename)
