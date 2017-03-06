@@ -36,10 +36,10 @@ class RealTimeClock(I2cDevice):
 
         packet = {
             "hs": str(result.hundredths_of_seconds),
-            "s": str(result.seconds),
-            "m": str(result.minutes),
-            "h":  str(result.hours),
-            "d": str(result.days),
+            "s": str(result.second),
+            "m": str(result.minute),
+            "h":  str(result.hour),
+            "d": str(result.day),
             "wd": str(result.week_day),
             "mo": str(result.month),
             "y": str(result.year),
