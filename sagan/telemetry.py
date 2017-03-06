@@ -1,19 +1,15 @@
 import os
 import json
 
-_FIFO = None
-if os.environ.get('TELEMETRY', '0') == '1':
-    _FIFO = open('/tmp/sagan_telemetry', 'w')
+_FIFO = open(os.environ.get('TELEMETRY', '/dev/null'), 'w')
 
 
 class Telemetry:
-
     @staticmethod
     def update(prefix: str, data: str):
         try:
-            if os.environ.get('TELEMETRY', '0') == '1':
-                _FIFO.write("{}:{}\n".format(prefix[0:3], json.dumps(data)))
-                _FIFO.flush()
+            _FIFO.write("{}:{}\n".format(prefix[0:3], json.dumps(data)))
+            _FIFO.flush()
         except:
             return False
         return True
