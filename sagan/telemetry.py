@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 
 _FIFO = open(os.environ.get('TELEMETRY', '/dev/null'), 'w')
@@ -10,6 +11,7 @@ class Telemetry:
         try:
             _FIFO.write("{}:{}\n".format(prefix[0:3], json.dumps(data)))
             _FIFO.flush()
-        except:
+        except BaseException as err:
+            print("Telemetry.update: {}".format(err), file=sys.stderr)
             return False
         return True
