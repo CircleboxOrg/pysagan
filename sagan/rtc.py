@@ -31,7 +31,7 @@ def _pack_rtc_bytes(t: 'datetime.datetime'):
     hectosecond = floor(t.microsecond / 10000)
     time_regs[0] = pack_bcd_lt_100(hectosecond)
     time_regs[1] = pack_bcd_lt_100(t.second)
-    time_regs[2] = pack_bcd_lt_100(t.min)
+    time_regs[2] = pack_bcd_lt_100(t.minute)
     time_regs[3] = pack_bcd_lt_100(t.hour)
     time_regs[4] = pack_bcd_lt_100(t.day)
     time_regs[5] = pack_bcd_lt_100(t.weekday())
