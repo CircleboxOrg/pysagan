@@ -45,7 +45,7 @@ class RealTimeClock(I2cDevice):
     def self_test(self):
         return True
 
-    def configure(self, **kwargs):
+    def configure(self, kwargs):
         self.write(0x28, [0x80])
         self.write(0x25, [0x20])
 
